@@ -57,7 +57,9 @@ function displayStats() {
 function displayMenu() {
   console.log('\n\nSelect Option:\n');  // each \n creates a new line
   console.log('(d) Eat Dot');
-  console.log('(p) Eat Power-Pellet');
+  if (powerPellets > 0) {
+    console.log('(p) Eat Power-Pellet');
+  }
   console.log('(1) Eat Inky');
   console.log('(2) Eat Blinky');
   console.log('(3) Eat Pinky');
@@ -111,8 +113,13 @@ function processInput(key) {
       eatDot();
       break;
     case 'p':
-      eatPowerPellet();
-      break;
+      if (powerPellets > 0) {
+        eatPowerPellet();
+        break;
+      } else {
+        console.log('\nNo Power-Pellets left!');
+        break;
+      }
     case '1':
       eatGhost(Inky);
       break;
