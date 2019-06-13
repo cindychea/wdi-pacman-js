@@ -148,6 +148,9 @@ function levelUp() {
     level += 1;
     powerPellets = 4;
     dots = 240;
+    for (g=0; g < ghosts.length; g++) {
+      ghosts[g].edible = false;
+    }
     console.log(`You levelled up!`);
   }
 }
