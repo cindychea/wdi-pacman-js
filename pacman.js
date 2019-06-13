@@ -33,6 +33,8 @@ const Clyde = {
   edible: false
 };
 
+ghosts = [Inky, Blinky, Pinky, Clyde]
+
 // Draw the screen functionality
 function drawScreen() {
   clearScreen();
@@ -75,6 +77,14 @@ function eatDot() {
   score += 10;
 }
 
+function eatPowerPellet() {
+  for (g=0; g < ghosts.length; g++) {
+    ghosts[g].edible = true;
+  }
+  score += 50;
+  powerPellets -= 1;
+}
+
 function eatGhost(ghost) {
   if (ghost.edible == false) {
     console.log(`\nPac-Man was killed by the ${ghost.colour} ghost, ${ghost.name}!`);
@@ -99,6 +109,9 @@ function processInput(key) {
       break;
     case 'd':
       eatDot();
+      break;
+    case 'p':
+      eatPowerPellet();
       break;
     case '1':
       eatGhost(Inky);
