@@ -8,28 +8,28 @@ const Inky = {
   menu_option: '1',
   name: 'Inky',
   colour: 'red',
-  character: 'Shadow',
+  character: 'shadow',
   edible: false
 };
 const Blinky = {
   menu_option: '2',
   name: 'Blinky',
   colour: 'cyan',
-  character: 'Speedy',
+  character: 'speedy',
   edible: false
 };
 const Pinky = {
   menu_option: '3',
   name: 'Pinky',
   colour: 'pink',
-  character: 'Bashful',
+  character: 'bashful',
   edible: false
 };
 const Clyde = {
   menu_option: '4',
   name: 'Clyde',
   colour: 'orange',
-  character: 'Pokey',
+  character: 'pokey',
   edible: false
 };
 
@@ -88,7 +88,11 @@ function eatPowerPellet() {
 }
 
 function eatGhost(ghost) {
-  if (ghost.edible == false) {
+  if (ghost.edible == true) {
+    console.log(`\n Pac-Man ate the ${ghost.character} ghost, ${ghost.name}!`);
+    score += 200;
+    ghost.edible = false;
+  } else if (ghost.edible == false) {
     console.log(`\nPac-Man was killed by the ${ghost.colour} ghost, ${ghost.name}!`);
     lives -= 1;
     gameOver()
