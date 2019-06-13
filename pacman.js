@@ -2,6 +2,7 @@
 let score = 0;
 let lives = 2;
 let powerPellets = 4;
+let dots = 240;
 
 // Define your ghosts here
 const Inky = {
@@ -52,11 +53,18 @@ function clearScreen() {
 function displayStats() {
   console.log(`Score: ${score}     Lives: ${lives}`);
   console.log(`\nPower-Pellets: ${powerPellets}`);
+  console.log(`\nDots Remaining: ${dots}`);
 }
 
 function displayMenu() {
   console.log('\n\nSelect Option:\n');  // each \n creates a new line
   console.log('(d) Eat Dot');
+  if (dots > 9) {
+    console.log('(t) Eat 10 Dots');
+  }
+  if (dots > 99) {
+    console.log('(h) Eat 100 Dots');
+  }
   if (powerPellets > 0) {
     console.log('(p) Eat Power-Pellet');
   }
@@ -76,7 +84,28 @@ function displayPrompt() {
 // Menu Options
 function eatDot() {
   console.log('\nChomp!');
+  dots -= 1;
   score += 10;
+}
+
+function eatTenDots() {
+  if (dots > 9) {
+    console.log('\nChomp! Chomp!');
+    dots -= 10;
+    score += 100;
+  } else {
+    console.log(`There are only ${dots} dots left!`)
+  }
+}
+
+function eatHundredDots() {
+  if (dots > 99) {
+    console.log('\nChomp! Chomp! CHOMP!');
+    dots -= 100;
+    score += 1000;
+  } else {
+    console.log(`There are only ${dots} dots left!`)
+  }
 }
 
 function eatPowerPellet() {
@@ -124,6 +153,16 @@ function processInput(key) {
     case 'd':
       eatDot();
       break;
+    case 't':
+      if (dots > 9) {
+        eatTenDots();
+        break
+      }
+    case 'h':
+      if (dots > 99) {
+        eatHundredDots();
+        break
+      }
     case 'p':
       if (powerPellets > 0) {
         eatPowerPellet();
