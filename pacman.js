@@ -60,10 +60,10 @@ function displayMenu() {
   if (powerPellets > 0) {
     console.log('(p) Eat Power-Pellet');
   }
-  console.log('(1) Eat Inky');
-  console.log('(2) Eat Blinky');
-  console.log('(3) Eat Pinky');
-  console.log('(4) Eat Clyde');
+  console.log(`(1) Eat Inky (${edible_or_not(Inky)})`);
+  console.log(`(2) Eat Blinky (${edible_or_not(Blinky)})`);
+  console.log(`(3) Eat Pinky (${edible_or_not(Pinky)})`);
+  console.log(`(4) Eat Clyde (${edible_or_not(Clyde)})`);
   console.log('(q) Quit');
 }
 
@@ -96,6 +96,14 @@ function eatGhost(ghost) {
     console.log(`\nPac-Man was killed by the ${ghost.colour} ghost, ${ghost.name}!`);
     lives -= 1;
     gameOver()
+  }
+}
+
+function edible_or_not(ghost) {
+  if (ghost.edible == true) {
+    return 'edible'
+  } else if (ghost.edible == false) {
+    return 'inedible'
   }
 }
 
