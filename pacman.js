@@ -35,6 +35,7 @@ const Clyde = {
 };
 
 ghosts = [Inky, Blinky, Pinky, Clyde]
+ghosts_eaten = []
 
 // Draw the screen functionality
 function drawScreen() {
@@ -94,7 +95,7 @@ function eatTenDots() {
     dots -= 10;
     score += 100;
   } else {
-    console.log(`There are only ${dots} dots left!`)
+    console.log(`There are only ${dots} dots left!`);
   }
 }
 
@@ -104,7 +105,7 @@ function eatHundredDots() {
     dots -= 100;
     score += 1000;
   } else {
-    console.log(`There are only ${dots} dots left!`)
+    console.log(`There are only ${dots} dots left!`);
   }
 }
 
@@ -119,8 +120,17 @@ function eatPowerPellet() {
 function eatGhost(ghost) {
   if (ghost.edible == true) {
     console.log(`\n Pac-Man ate the ${ghost.character} ghost, ${ghost.name}!`);
-    score += 200;
+    ghosts_eaten.push(ghost.name);
     ghost.edible = false;
+    if (ghosts_eaten.length == 1) {
+      score += 200;
+    } else if (ghosts_eaten.length == 2) {
+      score += 400;
+    } else if (ghosts_eaten.length == 3) {
+      score += 800;
+    } else if (ghosts_eaten.length ==4) {
+      score += 1600;
+    }
   } else if (ghost.edible == false) {
     console.log(`\nPac-Man was killed by the ${ghost.colour} ghost, ${ghost.name}!`);
     lives -= 1;
@@ -156,12 +166,12 @@ function processInput(key) {
     case 't':
       if (dots > 9) {
         eatTenDots();
-        break
+        break;
       }
     case 'h':
       if (dots > 99) {
         eatHundredDots();
-        break
+        break;
       }
     case 'p':
       if (powerPellets > 0) {
