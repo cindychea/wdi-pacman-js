@@ -4,31 +4,31 @@ let lives = 2;
 
 
 // Define your ghosts here
-const inky = {
+const Inky = {
   menu_option: '1',
   name: 'Inky',
-  colour: 'Red',
+  colour: 'red',
   character: 'Shadow',
   edible: false
 };
 const Blinky = {
   menu_option: '2',
   name: 'Blinky',
-  colour: 'Cyan',
+  colour: 'cyan',
   character: 'Speedy',
   edible: false
 };
 const Pinky = {
   menu_option: '3',
   name: 'Pinky',
-  colour: 'Pink',
+  colour: 'pink',
   character: 'Bashful',
   edible: false
 };
 const Clyde = {
   menu_option: '4',
   name: 'Clyde',
-  colour: 'Orange',
+  colour: 'orange',
   character: 'Pokey',
   edible: false
 };
@@ -73,6 +73,13 @@ function eatDot() {
   score += 10;
 }
 
+function eatGhost(ghost) {
+  if (ghost.edible == false) {
+    console.log(`\nPac-Man was killed by the ${ghost.colour} ghost, ${ghost.name}!`);
+    lives -= 1;
+  }
+}
+
 
 // Process Player's Input
 function processInput(key) {
@@ -83,6 +90,18 @@ function processInput(key) {
       break;
     case 'd':
       eatDot();
+      break;
+    case '1':
+      eatGhost(Inky);
+      break;
+    case '2':
+      eatGhost(Blinky);
+      break;
+    case '3':
+      eatGhost(Pinky);
+      break;
+    case '4':
+      eatGhost(Clyde);
       break;
     default:
       console.log('\nInvalid Command!');
