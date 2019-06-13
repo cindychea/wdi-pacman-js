@@ -3,6 +3,7 @@ let score = 0;
 let lives = 2;
 let powerPellets = 4;
 let dots = 240;
+let level = 1;
 
 // Define your ghosts here
 const Inky = {
@@ -52,7 +53,7 @@ function clearScreen() {
 }
 
 function displayStats() {
-  console.log(`Score: ${score}     Lives: ${lives}`);
+  console.log(`Level: ${level}     Score: ${score}     Lives: ${lives}`);
   console.log(`\nPower-Pellets: ${powerPellets}`);
   console.log(`\nDots Remaining: ${dots}`);
 }
@@ -69,10 +70,10 @@ function displayMenu() {
   if (powerPellets > 0) {
     console.log('(p) Eat Power-Pellet');
   }
-  console.log(`(1) Eat Inky (${edible_or_not(Inky)})`);
-  console.log(`(2) Eat Blinky (${edible_or_not(Blinky)})`);
-  console.log(`(3) Eat Pinky (${edible_or_not(Pinky)})`);
-  console.log(`(4) Eat Clyde (${edible_or_not(Clyde)})`);
+  console.log(`(1) Eat Inky (${edibleOrNot(Inky)})`);
+  console.log(`(2) Eat Blinky (${edibleOrNot(Blinky)})`);
+  console.log(`(3) Eat Pinky (${edibleOrNot(Pinky)})`);
+  console.log(`(4) Eat Clyde (${edibleOrNot(Clyde)})`);
   console.log('(q) Quit');
 }
 
@@ -94,9 +95,7 @@ function eatTenDots() {
     console.log('\nChomp! Chomp!');
     dots -= 10;
     score += 100;
-  } else {
-    console.log(`There are only ${dots} dots left!`);
-  }
+  } 
 }
 
 function eatHundredDots() {
@@ -104,9 +103,7 @@ function eatHundredDots() {
     console.log('\nChomp! Chomp! CHOMP!');
     dots -= 100;
     score += 1000;
-  } else {
-    console.log(`There are only ${dots} dots left!`);
-  }
+  } 
 }
 
 function eatPowerPellet() {
@@ -128,21 +125,30 @@ function eatGhost(ghost) {
       score += 400;
     } else if (ghosts_eaten.length == 3) {
       score += 800;
-    } else if (ghosts_eaten.length ==4) {
+    } else if (ghosts_eaten.length == 4) {
       score += 1600;
     }
   } else if (ghost.edible == false) {
     console.log(`\nPac-Man was killed by the ${ghost.colour} ghost, ${ghost.name}!`);
     lives -= 1;
-    gameOver()
+    gameOver();
   }
 }
 
-function edible_or_not(ghost) {
+function edibleOrNot(ghost) {
   if (ghost.edible == true) {
-    return 'edible'
+    return 'edible';
   } else if (ghost.edible == false) {
-    return 'inedible'
+    return 'inedible';
+  }
+}
+
+function levelUp() {
+  if (powerPellets == 0 && dots == 0) {
+    level += 1;
+    powerPellets = 4;
+    dots = 240;
+    console.log(`You levelled up!`);
   }
 }
 
@@ -161,24 +167,38 @@ function processInput(key) {
       process.exit();
       break;
     case 'd':
-      eatDot();
-      break;
+      if (dots > 0) {
+        eatDot();
+        levelUp()
+        break;
+      } else {
+        console.log('\nNo dots left!');
+        levelUp()
+        break;
+      }
     case 't':
       if (dots > 9) {
         eatTenDots();
+        levelUp()
         break;
+      } else {
+        console.log(`Not enough dots left to eat 10!`);
       }
     case 'h':
       if (dots > 99) {
         eatHundredDots();
+        levelUp()
         break;
+      } else {
+        console.log(`Not enough dots left to eat 100!`);
       }
     case 'p':
       if (powerPellets > 0) {
         eatPowerPellet();
+        levelUp()
         break;
       } else {
-        console.log('\nNo Power-Pellets left!');
+        console.log('\nNo power-pellets left!');
         break;
       }
     case '1':
